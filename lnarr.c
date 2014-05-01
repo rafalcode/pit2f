@@ -26,6 +26,32 @@ typedef struct
     unsigned uasz;
 } ua_bt; /* unsigned array basic type, simply the array with it size, that's all */
 
+void f2ua_bt(char *fname, ua_bt **lnarr_p)
+{
+   FILE *fin=fopen(fname, "r");
+   int c;
+   unsigned lnsz=0, lnbuf=LNBUF;
+   unsigned lidx=0;
+   (*lnarr_p)->ua=realloc((*lnarr_p)->ua, LNBUF*sizeof(unsigned)); /* pointer to a line array, packaged as a ptr to ua_bt */
+   memset((*lnarr_p)->ua, 0, lnbuf*sizeof(unsigned));
+
+   for(;;) {
+        c=fgetc(fin);
+        if(c == EOF) break;
+        if(c == '\n') {
+            CONDREALLOD(lidx, lnbuf, LNBUF, (*lnarr_p)->ua, unsigned);
+            (*lnarr_p)->ua[lidx++]=lnsz;
+            lnsz=0;
+        } else
+            lnsz++;
+   }
+   (*lnarr_p)->uasz=lidx;
+   (*lnarr_p)->ua=realloc((*lnarr_p)->ua, (*lnarr_p)->uasz*sizeof(unsigned));
+
+   fclose(fin);
+   return;
+}
+
 int main(int argc, char *argv[])
 {
    /* argument accounting: remember argc, the number of arguments, _includes_ the executable */
@@ -33,27 +59,12 @@ int main(int argc, char *argv[])
 		printf("Error. Pls supply argument (name of file).\n");
 		exit(EXIT_FAILURE);
 	}
+    unsigned j;
 
-   FILE *fin=fopen(argv[1], "r");
-   int c;
-   unsigned lnsz=0, j, lnbuf=LNBUF;
-   unsigned lidx=0;
-   ua_bt *lnarr_p=malloc(sizeof(ua_bt)); /* pointer to a line array, packaged as a ptr to ua_bt */
-   lnarr_p->ua=malloc(lnbuf*sizeof(unsigned)); /* pointer to a line array, packaged as a ptr to ua_bt */
-   memset(lnarr_p->ua, 0, lnbuf*sizeof(unsigned));
-
-   for(;;) {
-        c=fgetc(fin);
-        if(c == EOF) break;
-        if(c == '\n') {
-            CONDREALLOD(lidx, lnbuf, LNBUF, lnarr_p->ua, unsigned);
-            lnarr_p->ua[lidx++]=lnsz;
-            lnsz=0;
-        } else
-            lnsz++;
-   }
-   lnarr_p->uasz=lidx;
-   lnarr_p->ua=realloc(lnarr_p->ua, lnarr_p->uasz*sizeof(unsigned));
+    /* convert this file into a line array */
+   ua_bt *lnarr_p=malloc(sizeof(ua_bt)); /* because it starts as NULL: pointer to a line array, packaged as a ptr to ua_bt */
+   lnarr_p->ua=NULL; /* valgrind very pocky about initiaizations */
+   f2ua_bt(argv[1], &lnarr_p);
 
    printf("Input has %u lines, per line chars is:\n", lnarr_p->uasz); 
    for(j=0;j<lnarr_p->uasz;++j) 
@@ -62,7 +73,6 @@ int main(int argc, char *argv[])
 
    free(lnarr_p->ua);
    free(lnarr_p);
-   fclose(fin);
 
    return 0;
 }
