@@ -13,4 +13,4 @@ lnarr: lnarr.c
 .PHONY: clean
 
 clean:
-	rm -f ${EXES} core
+	rm -f ${EXES} vgcore.*
