@@ -5,7 +5,7 @@
 #include <string.h>
 
 #define CTOK ' '
-#define LNBUF 4
+#define LNBUF 3
 #define GSTRBUF 4 /* general string buffer */
 /* quick macro for conditionally enlarging a general native type array */
 #define CONDREALLOC(x, b, c, a, t); \
@@ -112,6 +112,7 @@ void f2flpua_t(char *fname, flpua_t **lnarr_p)
                         lnsz=0;
                         seenctok=1; /* toggle */
                         strbuf=GSTRBUF;
+                        (*lnarr_p)->stra1[lidx-1][lnsz]=c; /* this seemd trivial but turned out to be vital in the printing stage ... the undefined zero index caused havoc */
                     } else {
                         CONDREALLOCP(lnsz, strbuf, GSTRBUF, (*lnarr_p)->stra0[lidx-1]);
                         (*lnarr_p)->stra0[lidx-1][lnsz]=c;
