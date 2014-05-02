@@ -39,7 +39,7 @@
 
 /* quick macro for conditionally enlarging a twin digit and char array based on same lnbuf, a2 MUST be a double char ptr */
 #define CONDREALLOTDCA(x, b, c, a, a2, t, i, strbuf); \
-    if((x)==((b)-2)) { \
+    if((x)==((b)-1)) { \
         (b) += (c); \
         (a)=realloc((a), (b)*sizeof(t)); \
         (a2)=realloc((a2), (b)*sizeof(char*)); \
@@ -76,7 +76,7 @@ void f2flpua_t(char *fname, flpua_t **lnarr_p)
             }
             lidx++;
             lnsz=0;
-            strbuf=0;
+            strbuf=GSTRBUF;
         } else {
             if(lidx ==0) {
                 CONDREALLOCP(lnsz, strbuf, GSTRBUF, (*lnarr_p)->fl);
