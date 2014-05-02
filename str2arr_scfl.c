@@ -161,7 +161,7 @@ void prto_flpua_t(flpua_t *lnarr_p)
     printf("First line _string_, of length %u, is: \"%s\"\n", lnarr_p->flsz, lnarr_p->fl); 
     printf("Listing of the rest of the lines\n"); 
     for(j=0;j<lnarr_p->uasz;++j) 
-        printf("l%3u:\"%s%s\"(%u)\n", j, lnarr_p->stra0[j], lnarr_p->stra1[j], lnarr_p->ua0[j]+lnarr_p->ua1[j]);
+        printf("l%3u:\"%s|%s\"(%u)\n", j, lnarr_p->stra0[j], lnarr_p->stra1[j], lnarr_p->ua0[j]+lnarr_p->ua1[j]);
     return;
 }
 
@@ -192,8 +192,7 @@ int main(int argc, char *argv[])
     /* convert this file into a line array */
     flpua_t *lnarr_p=crea_flpua_t();
     f2flpua_t(argv[1], &lnarr_p);
-    // prto_flpua_t(lnarr_p);
-    printf("ctok: %c;\n", CTOK); 
+    prto_flpua_t(lnarr_p);
 
     free_flpua_t(&lnarr_p);
 
