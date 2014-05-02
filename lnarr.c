@@ -52,6 +52,15 @@ void f2ua_bt(char *fname, ua_bt **lnarr_p)
    return;
 }
 
+
+void free_ua_bt(ua_bt **lnarr_p)
+{
+   free((*lnarr_p)->ua);
+   free((*lnarr_p));
+   return;
+}
+
+
 int main(int argc, char *argv[])
 {
    /* argument accounting: remember argc, the number of arguments, _includes_ the executable */
@@ -71,8 +80,7 @@ int main(int argc, char *argv[])
        printf("%u ", lnarr_p->ua[j]);
    printf("\n"); 
 
-   free(lnarr_p->ua);
-   free(lnarr_p);
+   free_ua_bt(&lnarr_p);
 
    return 0;
 }
