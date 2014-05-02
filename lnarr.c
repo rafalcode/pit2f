@@ -60,6 +60,17 @@ ua_bt *crea_ua_bt(void)
     return lnarr_p;
 }
 
+void prto_ua_bt(ua_bt *lnarr_p)
+{
+    unsigned j;
+    printf("Input has %u lines, per line chars is:\n", lnarr_p->uasz); 
+    for(j=0;j<lnarr_p->uasz;++j) 
+        printf("%u ", lnarr_p->ua[j]);
+    printf("\n"); 
+    return;
+}
+
+
 void free_ua_bt(ua_bt **lnarr_p)
 {
     free((*lnarr_p)->ua);
@@ -75,16 +86,11 @@ int main(int argc, char *argv[])
         printf("Error. Pls supply argument (name of file).\n");
         exit(EXIT_FAILURE);
     }
-    unsigned j;
 
     /* convert this file into a line array */
     ua_bt *lnarr_p=crea_ua_bt();
     f2ua_bt(argv[1], &lnarr_p);
-
-    printf("Input has %u lines, per line chars is:\n", lnarr_p->uasz); 
-    for(j=0;j<lnarr_p->uasz;++j) 
-        printf("%u ", lnarr_p->ua[j]);
-    printf("\n"); 
+    prto_ua_bt(lnarr_p);
 
     free_ua_bt(&lnarr_p);
 
