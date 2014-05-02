@@ -1,5 +1,5 @@
 /* this is the most basic line number array program for a single input file
- * it is the bulding block for many more speicifc line readers */
+ * it is the bulding block for many more specific line readers */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
