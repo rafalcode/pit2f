@@ -65,11 +65,9 @@ void prto_ua_bt(ua_bt *lnarr_p)
     unsigned j;
     printf("Input has %u lines, per line chars is:\n", lnarr_p->uasz); 
     for(j=0;j<lnarr_p->uasz;++j) 
-        printf("%u ", lnarr_p->ua[j]);
-    printf("\n"); 
+        printf((j==lnarr_p->uasz-1)? "%u\n" : "%u ", lnarr_p->ua[j]);
     return;
 }
-
 
 void free_ua_bt(ua_bt **lnarr_p)
 {
