@@ -4,7 +4,7 @@
 # the project is named pit2f, because I wanted to pit two files against each other
 CC=gcc
 CFLAGS=-g -Wall# -pg # note the gprof option
-EXES=lnarr lnarr_scfl strarr_scfl
+EXES=lnarr lnarr_scfl strarr_scfl str2arr_scfl
 
 # lnarr, simple line arrays from a single file
 lnarr: lnarr.c
@@ -16,6 +16,10 @@ lnarr_scfl: lnarr_scfl.c
 
 # strarr_scfl, first line is held in a string, the rest of the lines are also stored ... a double array in introduced into the struct */
 strarr_scfl: strarr_scfl.c
+	${CC} ${CFLAGS} -o $@ $^
+
+# We hive off str2arr_scfl from strarr_scfl, because we want to split each line (except the first) by a certain one character token
+str2arr_scfl: str2arr_scfl.c
 	${CC} ${CFLAGS} -o $@ $^
 
 .PHONY: clean
