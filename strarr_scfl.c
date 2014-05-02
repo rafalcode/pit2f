@@ -116,8 +116,9 @@ void prto_flpua_t(flpua_t *lnarr_p)
     unsigned j;
     printf("Input has %u lines (less first line), per line chars is (first line is excluded):\n", lnarr_p->uasz); 
     printf("First line _string_, of length %u, is: \"%s\"\n", lnarr_p->flsz, lnarr_p->fl); 
+    printf("Listing of the rest of the lines\n"); 
     for(j=0;j<lnarr_p->uasz;++j) 
-        printf((j==lnarr_p->uasz-1)? "%u\n" : "%u ", lnarr_p->ua[j]);
+        printf("l%3u:\"%s\"(%u)\n", j, lnarr_p->stra[j], lnarr_p->ua[j]);
     return;
 }
 
