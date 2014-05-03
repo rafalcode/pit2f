@@ -19,11 +19,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define GBUF 4
 #define SSZ 5 /* DNA symbol alphabet size is 4 ? Of course, but the fifth is for N's which sometimes appear, and the sixth is for anything elses */
 #define CTOK ' '
-#define LNBUF 3
-#define GSTRBUF 4 /* general string buffer */
+#ifdef DEBUG
+    #define GBUF 4
+    #define LNBUF 3
+    #define GSTRBUF 4 /* general string buffer */
+#else
+    #define GBUF 16
+    #define LNBUF 128
+    #define GSTRBUF 8
+#endif
 
 /* quick macro for conditionally enlarging a general native type array */
 #define CONDREALLOC(x, b, c, a, t); \
