@@ -246,7 +246,8 @@ int main(int argc, char *argv[])
     /* Loop the fasta sequences over a loop of the isores */
     for(i=0;i<numsq;++i)
         for(j=0;j<numsq;++j) /* inner loop over isofrm.res */
-            if(!strncmp(lnarr_p->stra0[j], sqisz[i].idl, sqisz[i].idlsz))
+            /* OK, the if statement: complicated yes, we want a non-match to get out as quick as posible */
+            if( (lnarr_p->ua0[j] == sqisz[i].idlsz) & (!strncmp(lnarr_p->stra0[j], sqisz[i].idl, sqisz[i].idlsz)) )
                 printf("%s%s\n", lnarr_p->stra0[j], lnarr_p->stra1[j]);
 
     /* kill the fasta */
