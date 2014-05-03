@@ -5,7 +5,7 @@
 CC=gcc
 DBGCFLAGS=-g -Wall# -pg # note the gprof option
 CFLAGS=-O2
-EXES=lnarr lnarr_scfl strarr_scfl str2arr_scfl rdfasta pit2f pit2f_d
+EXES=lnarr lnarr_scfl strarr_scfl str2arr_scfl rdfasta pit2f pit2f_d hamin2 pit2fyu
 
 # lnarr, simple line arrays from a single file
 lnarr: lnarr.c
@@ -31,8 +31,16 @@ rdfasta: rdfasta.c
 pit2f: pit2f.c
 	${CC} ${CFLAGS} -o $@ $^
 
+# This version includes a simple break because it assume unique matches
+pit2fyu: pit2f.c
+	${CC} ${CFLAGS} -DYESUNIQUE -o $@ $^
+
 # The debug version of above .. i.e. printing of struct contents.
 pit2f_d: pit2f.c
+	${CC} ${DBGCFLAGS} -DDEBUG -o $@ $^
+
+# Protoype for hash funcion. Had to start with an old one.
+hamin2: hamin2.c
 	${CC} ${DBGCFLAGS} -DDEBUG -o $@ $^
 
 .PHONY: clean

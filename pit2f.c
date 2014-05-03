@@ -266,8 +266,12 @@ int main(int argc, char *argv[])
     //     for(j=0;j<numsq;++j) // yes, I had this is a stupid error.
             for(j=0;j<lnarr_p->uasz;++j) /* inner loop over isofrm.res */
             /* OK, the if statement: complicated yes, we want a non-match to get out as quick as posible */
-            if( (lnarr_p->ua0[j] == sqisz[i].idlsz) & !(strncmp(lnarr_p->stra0[j], sqisz[i].idl, sqisz[i].idlsz)) )
+            if( (lnarr_p->ua0[j] == sqisz[i].idlsz) & !(strncmp(lnarr_p->stra0[j], sqisz[i].idl, sqisz[i].idlsz)) ) {
                 printf("%s%s\n", lnarr_p->stra0[j], lnarr_p->stra1[j]);
+#ifdef YESUNIQUE
+                break;
+#endif
+            }
 
     /* kill the fasta */
     for(i=0;i<numsq;++i) 
