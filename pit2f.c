@@ -45,7 +45,7 @@ void prti_s(i_s *sqisz, int sz)
 i_s *crea_i_s(void)
 {
     int i;
-    int gbuf=GBUF, idlbuf=GBUF;
+    int gbuf=GBUF, idlbuf=GSTRBUF;
     i_s *sqisz=malloc(gbuf*sizeof(i_s));
     for(i=0;i<gbuf;++i) 
         sqisz[i].idl=calloc(idlbuf, sizeof(char));
@@ -63,7 +63,7 @@ void flpis_t(char *fname, i_s **sqisz, int *numsq)
     unsigned char idline=0, begline=1; /* booleans */
     unsigned lidx=0, idcidx=0 /*charidx just for the title line */;
     int i, c, sqidx=-1; /* this is slightly dangerous, you need very much to knwo what you're doing */
-    int gbuf=GBUF, idlbuf=GBUF;
+    int gbuf=GBUF, idlbuf=GSTRBUF;
 
     while( ( (c = fgetc(fin)) != EOF) ) {
         if(c =='\n') {
@@ -74,7 +74,7 @@ void flpis_t(char *fname, i_s **sqisz, int *numsq)
             }
             idline=0;
             idcidx=0;
-            idlbuf=GBUF;
+            idlbuf=GSTRBUF;
             lidx++;
             begline=1;
         } else if(c == '>') {
@@ -86,7 +86,7 @@ void flpis_t(char *fname, i_s **sqisz, int *numsq)
                     gbuf+=GBUF;
                     (*sqisz)=realloc((*sqisz), gbuf*sizeof(i_s));
                     for(i=gbuf-GBUF;i<gbuf;++i) 
-                        (*sqisz)[i].idl=calloc(GBUF, sizeof(char));
+                        (*sqisz)[i].idl=calloc(GSTRBUF, sizeof(char));
                 }
                 (*sqisz)[sqidx].tsz=0;
                 for(i=0;i<SSZ;++i)
@@ -96,7 +96,7 @@ void flpis_t(char *fname, i_s **sqisz, int *numsq)
             // else
             // (*sqisz)[sqidx].idl[idcidx]=c;
         } else if (idline) { /* we won't store the sequence, just get symbol counts */
-            CONDREALLOCP(idcidx, idlbuf, GBUF, (*sqisz)[sqidx].idl);
+            CONDREALLOCP(idcidx, idlbuf, GSTRBUF, (*sqisz)[sqidx].idl);
             (*sqisz)[sqidx].idl[idcidx]=c;
             idcidx++;
         } else if(!idline) { /* we won't store the sequence, just get symbol counts */

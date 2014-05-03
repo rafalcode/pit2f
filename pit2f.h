@@ -28,7 +28,7 @@
     #define GSTRBUF 4 /* general string buffer */
 #else
     #define GBUF 16
-    #define LNBUF 128
+    #define LNBUF 1024
     #define GSTRBUF 8
 #endif
 
