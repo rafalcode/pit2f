@@ -260,7 +260,7 @@ int main(int argc, char *argv[])
 
     /* the idea is to introduce a hash at some stage */
 
-    printf("_Output Description_: 2nd file lines (#l:%u) whose 1st _word_ matches with any sequence id line in 1st (fasta) file (#seqs:%u).\n", lnarr_p->uasz, numsq);
+    printf("_Output Description_: 2nd file lines (#l:%u) whose 1st _word_ matches with any sequence id line in 1st (fasta) file (#seqs:%u).\n", lnarr_p->uasz+1, numsq);
     /* Loop the fasta sequences over a loop of the isores */
     for(i=0;i<numsq;++i)
     //     for(j=0;j<numsq;++j) // yes, I had this is a stupid error.
