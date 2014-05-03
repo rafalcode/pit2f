@@ -198,7 +198,6 @@ void prto_flpua_t(flpua_t *lnarr_p)
         printf("l%3u:\"%s\" (#c %u) |%s\n", j, lnarr_p->stra0[j], lnarr_p->ua0[j], lnarr_p->stra1[j]);
     return;
 }
-
 void free_flpua_t(flpua_t **lnarr_p)
 {
     unsigned j;
@@ -225,22 +224,30 @@ int main(int argc, char *argv[])
 
     /* OK, we goign to read in our fasta first, well, beacuase it's the first argument */
     i_s *sqisz=crea_i_s();
-    int numsq, i;
+    int numsq, i, j;
     flpis_t(argv[1], &sqisz, &numsq);
+#ifdef DEBUG
     prti_s(sqisz, numsq);
     /* the summary comes at the end because otherwise, with many sequences, it goes off-screen */
     printf("Num fasta sequences in file: %u.\n", numsq);
+#endif
 
     /* OK, now we turn our attention to the isoforms.results file */
     flpua_t *lnarr_p=crea_flpua_t();
     f2flpua_t(argv[2], &lnarr_p);
+#ifdef DEBUG
     prto_flpua_t(lnarr_p);
-
-    /* OK, so both are now in memory */
     printf("\nOK, both files are now in appropriate structs in memory\n\n");
+#endif
 
+    /* the idea is to introduce a hash at some stage */
 
-
+    printf("_Output Description_: 2nd file lines (#l:%u) whose 1st _word_ matches with any sequence id line in 1st (fasta) file (#seqs:%u).\n", lnarr_p->uasz, numsq);
+    /* Loop the fasta sequences over a loop of the isores */
+    for(i=0;i<numsq;++i)
+        for(j=0;j<numsq;++j) /* inner loop over isofrm.res */
+            if(!strncmp(lnarr_p->stra0[j], sqisz[i].idl, sqisz[i].idlsz))
+                printf("%s%s\n", lnarr_p->stra0[j], lnarr_p->stra1[j]);
 
     /* kill the fasta */
     for(i=0;i<numsq;++i) 

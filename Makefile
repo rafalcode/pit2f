@@ -4,7 +4,7 @@
 # the project is named pit2f, because I wanted to pit two files against each other
 CC=gcc
 CFLAGS=-g -Wall# -pg # note the gprof option
-EXES=lnarr lnarr_scfl strarr_scfl str2arr_scfl rdfasta pit2f
+EXES=lnarr lnarr_scfl strarr_scfl str2arr_scfl rdfasta pit2f pit2f_d
 
 # lnarr, simple line arrays from a single file
 lnarr: lnarr.c
@@ -29,6 +29,10 @@ rdfasta: rdfasta.c
 # Finally we can get around to combining the two files */
 pit2f: pit2f.c
 	${CC} ${CFLAGS} -o $@ $^
+
+# The debug version of above .. i.e. printing of struct contents.
+pit2f_d: pit2f.c
+	${CC} ${CFLAGS} -DDEBUG -o $@ $^
 
 .PHONY: clean
 
