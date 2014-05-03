@@ -84,7 +84,9 @@ void flpis_t(char *fname, i_s **sqisz, int *numsq)
                 sqidx++;
                 if(sqidx==gbuf) {
                     gbuf+=GBUF;
-                    sqisz=realloc(sqisz, gbuf*sizeof(i_s));
+                    (*sqisz)=realloc((*sqisz), gbuf*sizeof(i_s));
+                    for(i=gbuf-GBUF;i<gbuf;++i) 
+                        (*sqisz)[i].idl=calloc(GBUF, sizeof(char));
                 }
                 (*sqisz)[sqidx].tsz=0;
                 for(i=0;i<SSZ;++i)
@@ -134,10 +136,10 @@ void f2flpua_t(char *fname, flpua_t **lnarr_p)
         if(c == EOF) break;
         if(c == '\n') {
             if(lidx !=0) {
-                CONDREALLOTDCA2(lidx-1, lnbuf, LNBUF, (*lnarr_p)->ua0, (*lnarr_p)->ua1, (*lnarr_p)->stra0, (*lnarr_p)->stra1, unsigned, j, GSTRBUF);
                 (*lnarr_p)->ua1[lidx-1]=lnsz;
                 (*lnarr_p)->stra1[lidx-1][lnsz]='\0';
                 (*lnarr_p)->stra1[lidx-1]=realloc((*lnarr_p)->stra1[lidx-1], ((*lnarr_p)->ua1[lidx-1]+1)*sizeof(char));
+                CONDREALLOTDCA2(lidx-1, lnbuf, LNBUF, (*lnarr_p)->ua0, (*lnarr_p)->ua1, (*lnarr_p)->stra0, (*lnarr_p)->stra1, unsigned, j, GSTRBUF);
             } else {
                 (*lnarr_p)->fl[lnsz]='\0';
                 (*lnarr_p)->flsz=lnsz;
@@ -261,9 +263,10 @@ int main(int argc, char *argv[])
     printf("_Output Description_: 2nd file lines (#l:%u) whose 1st _word_ matches with any sequence id line in 1st (fasta) file (#seqs:%u).\n", lnarr_p->uasz, numsq);
     /* Loop the fasta sequences over a loop of the isores */
     for(i=0;i<numsq;++i)
-        for(j=0;j<numsq;++j) /* inner loop over isofrm.res */
+    //     for(j=0;j<numsq;++j) // yes, I had this is a stupid error.
+            for(j=0;j<lnarr_p->uasz;++j) /* inner loop over isofrm.res */
             /* OK, the if statement: complicated yes, we want a non-match to get out as quick as posible */
-            if( (lnarr_p->ua0[j] == sqisz[i].idlsz) & (!strncmp(lnarr_p->stra0[j], sqisz[i].idl, sqisz[i].idlsz)) )
+            if( (lnarr_p->ua0[j] == sqisz[i].idlsz) & !(strncmp(lnarr_p->stra0[j], sqisz[i].idl, sqisz[i].idlsz)) )
                 printf("%s%s\n", lnarr_p->stra0[j], lnarr_p->stra1[j]);
 
     /* kill the fasta */

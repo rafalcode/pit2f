@@ -23,7 +23,7 @@
 #define CTOK ' '
 #ifdef DEBUG
     #define GBUF 4
-    #define LNBUF 3
+    #define LNBUF 4
     #define GSTRBUF 4 /* general string buffer */
 #else
     #define GBUF 16
@@ -40,9 +40,10 @@
 
 /* quick macro for conditionally enlarging a char pointer, space always available for final null char */
 #define CONDREALLOCP(x, b, c, a); \
-    if((x)==((b)-2)) { \
+    if((x)>=((b)-3)) { \
         (b) += (c); \
         (a)=realloc((a), (b)*sizeof(char)); \
+        memset((a)+(b)-(c), '\0', (c)*sizeof(char)); \
     }
 
 /* quick macro for conditionally enlarging a DOUBLE char pointer, space always available for final null char */
@@ -51,7 +52,7 @@
         (b) += (c); \
         (a)=realloc((a), (b)*sizeof(char*)); \
         for((i)=(a)+(b)-(c);(i)<(a)+(b);++(i)) \
-        (a)[(i)]=malloc((strbuf)*sizeof(char)); \
+        (a)[(i)]=calloc((strbuf), sizeof(char)); \
     }
 
 /* quick macro for conditionally enlarging a numeric native type array and setting extended memory to zero */
@@ -69,7 +70,7 @@
         (a)=realloc((a), (b)*sizeof(t)); \
         (a2)=realloc((a2), (b)*sizeof(char*)); \
         for((i)=(b)-(c);(i)<(b);++(i)) \
-        (a2)[(i)]=malloc((strbuf)*sizeof(char)); \
+        (a2)[(i)]=calloc((strbuf), sizeof(char)); \
         memset((a)+(b)-(c), 0, (c)*sizeof(t)); \
     }
 
@@ -82,8 +83,8 @@
         (a2)=realloc((a2), (b)*sizeof(char*)); \
         (a3)=realloc((a3), (b)*sizeof(char*)); \
         for((i)=(b)-(c);(i)<(b);++(i)) { \
-        (a2)[(i)]=malloc((strbuf)*sizeof(char)); \
-        (a3)[(i)]=malloc((strbuf)*sizeof(char)); \
+        (a2)[(i)]=calloc((strbuf), sizeof(char)); \
+        (a3)[(i)]=calloc((strbuf), sizeof(char)); \
         } \
         memset((a)+(b)-(c), 0, (c)*sizeof(t)); \
         memset((a1)+(b)-(c), 0, (c)*sizeof(t)); \
