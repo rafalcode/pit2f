@@ -162,7 +162,7 @@ void prto_flpua_t(flpua_t *lnarr_p)
     printf("First line _string_, of length %u, is: \"%s\"\n", lnarr_p->flsz, lnarr_p->fl); 
     printf("Listing of the rest of the lines\n"); 
     for(j=0;j<lnarr_p->uasz;++j) 
-        printf("l%3u:\"%s|%s\"(%u)\n", j, lnarr_p->stra0[j], lnarr_p->stra1[j], lnarr_p->ua0[j]+lnarr_p->ua1[j]);
+        printf("l%3u:\"%s\" (#c %u) |%s\n", j, lnarr_p->stra0[j], lnarr_p->ua0[j], lnarr_p->stra1[j]);
     return;
 }
 
