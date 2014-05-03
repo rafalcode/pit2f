@@ -20,7 +20,8 @@
 #include <string.h>
 
 #define SSZ 5 /* DNA symbol alphabet size is 4 ? Of course, but the fifth is for N's which sometimes appear, and the sixth is for anything elses */
-#define CTOK ' '
+#define CTOK0 ' '
+#define CTOK2 '\t'
 #ifdef DEBUG
     #define GBUF 4
     #define LNBUF 4

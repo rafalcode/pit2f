@@ -19,7 +19,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define CTOK ' '
+#define CTOK0 ' '
+#define CTOK2 '\t'
 #define LNBUF 2
 #define GSTRBUF 4 /* general string buffer */
 /* quick macro for conditionally enlarging a general native type array */
@@ -121,7 +122,7 @@ void f2flpua_t(char *fname, flpua_t **lnarr_p)
                 (*lnarr_p)->fl[lnsz]=c;
             } else {
                 if(!seenctok) {
-                    if(c==CTOK) { /* finish up our "0" counterparts */
+                    if( (c==CTOK0) | (c==CTOK2) ) { /* finish up our "0" counterparts */
 //                        CONDREALLOTDCA(lidx-1, lnbuf, LNBUF, (*lnarr_p)->ua0, (*lnarr_p)->stra0, unsigned, j, GSTRBUF);
                         (*lnarr_p)->ua0[lidx-1]=lnsz;
                         (*lnarr_p)->stra0[lidx-1][lnsz]='\0';

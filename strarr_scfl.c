@@ -19,8 +19,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define LNBUF 4
-#define GSTRBUF 4 /* general string buffer */
+#define LNBUF 2
+#define GSTRBUF 2 /* general string buffer */
 /* quick macro for conditionally enlarging a general native type array */
 #define CONDREALLOC(x, b, c, a, t); \
     if((x)==((b)-1)) { \
@@ -33,6 +33,7 @@
     if((x)==((b)-2)) { \
         (b) += (c); \
         (a)=realloc((a), (b)*sizeof(char)); \
+        memset((a)+(b)-(c), '\0', (c)*sizeof(char)); \
     }
 
 /* quick macro for conditionally enlarging a DOUBLE char pointer, space always available for final null char */
@@ -40,8 +41,8 @@
     if((x)==((b)-1)) { \
         (b) += (c); \
         (a)=realloc((a), (b)*sizeof(char*)); \
-        for((i)=(a)+(b)-(c);(i)<(a)+(b);++(i)) \
-            (a)[(i)]=malloc((strbuf)*sizeof(char)); \
+        for((i)=(b)-(c);(i)<(b);++(i)) \
+            (a)[(i)]=calloc((strbuf), sizeof(char)); \
     }
 
 /* quick macro for conditionally enlarging a numeric native type array and setting extended memory to zero */
@@ -59,7 +60,7 @@
         (a)=realloc((a), (b)*sizeof(t)); \
         (a2)=realloc((a2), (b)*sizeof(char*)); \
         for((i)=(b)-(c);(i)<(b);++(i)) \
-            (a2)[(i)]=malloc((strbuf)*sizeof(char)); \
+            (a2)[(i)]=calloc((strbuf), sizeof(char)); \
         memset((a)+(b)-(c), 0, (c)*sizeof(t)); \
     }
 
@@ -82,9 +83,9 @@ void f2flpua_t(char *fname, flpua_t **lnarr_p)
         if(c == EOF) break;
         if(c == '\n') {
             if(lidx !=0) {
-                CONDREALLOTDCA(lidx-1, lnbuf, LNBUF, (*lnarr_p)->ua, (*lnarr_p)->stra, unsigned, j, GSTRBUF);
                 (*lnarr_p)->ua[lidx-1]=lnsz;
                 (*lnarr_p)->stra[lidx-1][lnsz]='\0';
+                CONDREALLOTDCA(lidx-1, lnbuf, LNBUF, (*lnarr_p)->ua, (*lnarr_p)->stra, unsigned, j, GSTRBUF);
             } else {
                 (*lnarr_p)->fl[lnsz]='\0';
                 (*lnarr_p)->flsz=lnsz;

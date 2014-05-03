@@ -19,8 +19,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define LNBUF 4
-#define GSTRBUF 4 /* general string buffer */
+#define LNBUF 2
+#define GSTRBUF 2 /* general string buffer */
 /* quick macro for conditionally enlarging a general native type array */
 #define CONDREALLOC(x, b, c, a, t); \
     if((x)==((b)-1)) { \

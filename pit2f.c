@@ -136,10 +136,10 @@ void f2flpua_t(char *fname, flpua_t **lnarr_p)
         if(c == EOF) break;
         if(c == '\n') {
             if(lidx !=0) {
+                CONDREALLOTDCA2(lidx-1, lnbuf, LNBUF, (*lnarr_p)->ua0, (*lnarr_p)->ua1, (*lnarr_p)->stra0, (*lnarr_p)->stra1, unsigned, j, GSTRBUF);
                 (*lnarr_p)->ua1[lidx-1]=lnsz;
                 (*lnarr_p)->stra1[lidx-1][lnsz]='\0';
                 (*lnarr_p)->stra1[lidx-1]=realloc((*lnarr_p)->stra1[lidx-1], ((*lnarr_p)->ua1[lidx-1]+1)*sizeof(char));
-                CONDREALLOTDCA2(lidx-1, lnbuf, LNBUF, (*lnarr_p)->ua0, (*lnarr_p)->ua1, (*lnarr_p)->stra0, (*lnarr_p)->stra1, unsigned, j, GSTRBUF);
             } else {
                 (*lnarr_p)->fl[lnsz]='\0';
                 (*lnarr_p)->flsz=lnsz;
@@ -155,7 +155,7 @@ void f2flpua_t(char *fname, flpua_t **lnarr_p)
                 (*lnarr_p)->fl[lnsz]=c;
             } else {
                 if(!seenctok) {
-                    if(c==CTOK) { /* finish up our "0" counterparts */
+                    if( (c==CTOK0) | (c==CTOK2) ) { /* finish up our "0" counterparts */
 //                        CONDREALLOTDCA(lidx-1, lnbuf, LNBUF, (*lnarr_p)->ua0, (*lnarr_p)->stra0, unsigned, j, GSTRBUF);
                         (*lnarr_p)->ua0[lidx-1]=lnsz;
                         (*lnarr_p)->stra0[lidx-1][lnsz]='\0';
