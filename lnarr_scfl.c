@@ -1,5 +1,20 @@
-/* this is the most basic line number array program for a single input file
- * it is the bulding block for many more specific line readers */
+/* lnarr_scfl.c builds on lnarr.c by merely slupring the first line into memory, and only counting the length of the rest of the lines. Prototyoe for strarr_fcl.c
+   Copyright (C) 2014  Ramon Fallon
+   
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License
+   as published by the Free Software Foundation; either version 2
+   of the License, or (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
