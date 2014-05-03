@@ -233,7 +233,7 @@ int main(int argc, char *argv[])
 
     /* OK, now we turn our attention to the isoforms.results file */
     flpua_t *lnarr_p=crea_flpua_t();
-    f2flpua_t(argv[1], &lnarr_p);
+    f2flpua_t(argv[2], &lnarr_p);
     prto_flpua_t(lnarr_p);
 
     /* OK, so both are now in memory */
