@@ -5,7 +5,7 @@
 CC=gcc
 DBGCFLAGS=-g -Wall# -pg # note the gprof option
 CFLAGS=-O2
-EXES=lnarr lnarr_scfl strarr_scfl str2arr_scfl rdfasta pit2f pit2f_d hamin2 pit2fyu pit2fwh
+EXES=lnarr lnarr_scfl strarr_scfl str2arr_scfl rdfasta pit2f pit2f_d hamin2 pit2fyu pit2fwh pit2fwh_d
 
 # lnarr, simple line arrays from a single file
 lnarr: lnarr.c
@@ -39,9 +39,13 @@ pit2fyu: pit2f.c
 pit2f_d: pit2f.c
 	${CC} ${DBGCFLAGS} -DDEBUG -o $@ $^
 
-# FOr real speed increases you need to hash .. with is With Hash
+# For real speed increases you need to hash .. with is With Hash
 pit2fwh: pit2fwh.c
 	${CC} ${CFLAGS} -o $@ $^
+
+# The debug version of above .. i.e. printing of struct contents.
+pit2fwh_d: pit2fwh.c
+	${CC} ${DBGCFLAGS} -DDEBUG -o $@ $^
 
 .PHONY: clean
 

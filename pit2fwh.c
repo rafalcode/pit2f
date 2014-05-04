@@ -1,4 +1,4 @@
-/* pit2f.c .. pit a fasta file against an isoform.results file
+/* pit2fwh.c .. pit a fasta file against an isoform.results file
    Copyright (C) 2014  Ramon Fallon
    
    This program is free software; you can redistribute it and/or
@@ -16,6 +16,17 @@
    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 #include "pit2f.h"
+
+void usage(void)
+{
+    printf("pit2fwh is a program to search for fasta id's in an RSEM isoforms.results file\n");
+    printf("The mnemonic for the program name is Pit Two Files With Hash\" because it matches up sequence ID lines\n");
+    printf("in the (first) fasta file file, against the RSEM found isoforms represented as single lines in the second file\n");
+    printf("To use properly, the first argument must be the filename for the fasta file located in the current directory\n");
+    printf("The second argument should be the isoforms.results file. Note that the output is sent to STOUT, or screen,\n");
+    printf("so it is up to the user to catch it properly\n");
+    return;
+}
 
 typedef struct /* i_s */
 {
@@ -272,7 +283,7 @@ void f2flpua_t(char *fname, flpua_t **lnarr_p)
             } else {
                 if(!seenctok) {
                     if( (c==CTOK0) | (c==CTOK2) ) { /* finish up our "0" counterparts */
-//                        CONDREALLOTDCA(lidx-1, lnbuf, LNBUF, (*lnarr_p)->ua0, (*lnarr_p)->stra0, unsigned, j, GSTRBUF);
+                        //                        CONDREALLOTDCA(lidx-1, lnbuf, LNBUF, (*lnarr_p)->ua0, (*lnarr_p)->stra0, unsigned, j, GSTRBUF);
                         (*lnarr_p)->ua0[lidx-1]=lnsz;
                         (*lnarr_p)->stra0[lidx-1][lnsz]='\0';
                         (*lnarr_p)->stra0[lidx-1]=realloc((*lnarr_p)->stra0[lidx-1], ((*lnarr_p)->ua0[lidx-1]+1)*sizeof(char));
@@ -352,11 +363,14 @@ int main(int argc, char *argv[])
 {
     /* argument accounting: remember argc, the number of arguments, _includes_ the executable */
     if(argc!=3) {
-        printf("Usage error. Pls supply 2 arguments: 1) fasta file name. 2) isofrms.res file in which you want to look for fasta idlines.\n");
+        usage();
+        if(argc==2)
+           if( !strncmp(argv[1], "-h", 2) | !strncmp(argv[1], "--help", 6) )
+            exit(EXIT_SUCCESS);
         exit(EXIT_FAILURE);
     }
 
-    /* OK, we goign to read in our fasta first, well, beacuase it's the first argument */
+    /* OK, we going to read in our fasta first, well, beacuase it's the first argument */
     i_s *sqisz=crea_i_s();
     int i, j;
     unsigned numsq;
