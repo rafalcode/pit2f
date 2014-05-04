@@ -389,9 +389,10 @@ int main(int argc, char *argv[])
 #ifdef DEBUG
     prto_flpua_t(lnarr_p);
     printf("\nOK, both files are now in appropriate structs in memory\n\n");
+    /* the following line relegated to DEBUG version only ... the user isn't interested. */
+    printf("_Output Description_: 2nd file lines (#l:%u) whose 1st _word_ matches with any sequence id line in 1st (fasta) file (#seqs:%u).\n", lnarr_p->uasz+1, numsq);
 #endif
 
-    printf("_Output Description_: 2nd file lines (#l:%u) whose 1st _word_ matches with any sequence id line in 1st (fasta) file (#seqs:%u).\n", lnarr_p->uasz+1, numsq);
     for(j=0;j<lnarr_p->uasz;++j)  {/* inner loop over isofrm.res */
         if( (idlsearch(stab, htsz, lnarr_p->stra0[j], lnarr_p->ua0[j]) ) )
             printf("%s%s\n", lnarr_p->stra0[j], lnarr_p->stra1[j]);
