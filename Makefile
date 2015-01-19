@@ -1,7 +1,8 @@
 # this project starts with the simplest of line number array programs
-# and builds in on it to incorporate most specific versions of the same idea.
+# and builds upon it to incorporate most specific versions of the same idea.
 #
-# the project is named pit2f, because I wanted to pit two files against each other
+# the project is named pit2f, named so as it pits two files against each other: "pit" (as verb) is the same as "to match up"
+#
 CC=gcc
 DBGCFLAGS=-g -Wall# -pg # note the gprof option
 CFLAGS=-O2
