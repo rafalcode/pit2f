@@ -6,7 +6,7 @@
 CC=gcc
 DBGCFLAGS=-g -Wall# -pg # note the gprof option
 CFLAGS=-O2
-EXES=lnarr lnarr_scfl strarr_scfl str2arr_scfl rdfasta pit2f pit2f_d hamin2 pit2fyu pit2fwh pit2fwh_d pit2d
+EXES=lnarr lnarr_scfl strarr_scfl str2arr_scfl rdfasta pit2f pit2f_d hamin2 pit2fyu pit2fwh pit2fwh_d pit2d rd1ctf rd1ctfh
 
 # lnarr, simple line arrays from a single file
 lnarr: lnarr.c
@@ -50,7 +50,15 @@ pit2fwh_d: pit2fwh.c
 
 # We now want to compare two directories of fasta files and see which id match .. builds upon pit2fwh
 pit2d: pit2d.c
-	${CC} ${CFLAGS} -o $@ $^
+	${CC} ${DBGCFLAGS} -DDEBUG -o $@ $^
+
+# After some time, come back to this looking for code to set operations on SNP names lists
+# let's start with read 1-column text file
+rd1ctf: rd1ctf.c
+	${CC} ${DBGCFLAGS} -DDEBUG -o $@ $^
+# this version hashes each line which is not zero length.
+rd1ctfh: rd1ctfh.c
+	${CC} ${DBGCFLAGS} -DDEBUG -o $@ $^
 
 .PHONY: clean
 
